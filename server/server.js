@@ -1,36 +1,31 @@
 import express from 'express'
-import path from 'path'
-import favicon from 'serve-favicon'
-import dotenv from 'dotenv'
+import cors from 'cors';
+import workshopRouter from './routes/workshops.js'
+import eventRouter from './routes/events.js'
+import locationRouter from './routes/locations.js'
 
-// import the router from your routes file
+const app = express()
+app.use(cors({
+  origin: 'http://localhost:5173',
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
 
+app.use(express.json());
 
-dotenv.config()
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).send('Something broke!');
+  });
+
+app.get('/', (req, res) => { res.status(200).send('<h1 style="text-align: center; margin-top: 50px;">Codelock server</h1>') })
+
+app.use('/workshops', workshopRouter)
+app.use('/api/events', eventRouter)
+app.use('/api/locations', locationRouter)
 
 const PORT = process.env.PORT || 3000
 
-const app = express()
-
-app.use(express.json())
-
-if (process.env.NODE_ENV === 'development') {
-    app.use(favicon(path.resolve('../', 'client', 'public', 'party.png')))
-}
-else if (process.env.NODE_ENV === 'production') {
-    app.use(favicon(path.resolve('public', 'party.png')))
-    app.use(express.static('public'))
-}
-
-// specify the api path for the server to use
-
-
-if (process.env.NODE_ENV === 'production') {
-    app.get('/*', (_, res) =>
-        res.sendFile(path.resolve('public', 'index.html'))
-    )
-}
-
 app.listen(PORT, () => {
-    console.log(`server listening on http://localhost:${PORT}`)
+    console.log(`Server started. Listening on port: ${PORT}`)
 })

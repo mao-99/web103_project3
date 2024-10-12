@@ -1,8 +1,8 @@
-import React from 'react'
+import {React, useEffect} from 'react'
 import { useRoutes, Link } from 'react-router-dom'
-import Locations from './pages/Locations'
-import LocationEvents from './pages/LocationEvents'
-import Events from './pages/Events'
+import Locations from './pages/Locations.jsx'
+import LocationEvents from './pages/LocationEvents.jsx'
+import Events from './components/Event.jsx'
 import './App.css'
 
 const App = () => {
@@ -32,6 +32,21 @@ const App = () => {
       element: <Events />
     }
   ])
+  useEffect(() => {
+    const fetchEvents = async () => {
+      try {
+        const response = await fetch('http://localhost:3000/api/events')
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json()
+        console.log(data)
+      } catch (error) {
+        console.error("Could not fetch events:", error)
+      }
+    };
+    fetchEvents();
+  }, [])
 
   return (
     <div className='app'>
@@ -46,7 +61,7 @@ const App = () => {
       </header>
 
       <main>
-        {element}
+
       </main>
     </div>
   )

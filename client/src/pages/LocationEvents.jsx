@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import Event from '../components/Event'
 import '../css/LocationEvents.css'
+import { getAllEvents } from '../services/EventsAPI'
 
 const LocationEvents = ({index}) => {
     const [location, setLocation] = useState([])
     const [events, setEvents] = useState([])
+
+    useEffect(()=> {
+    }, [])
 
     return (
         <div className='location-events'>
