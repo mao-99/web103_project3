@@ -1,10 +1,10 @@
-# WEB103 Project 3 - *Name of App Here*
+# WEB103 Project 3 - UnityGrid Plaza
 
-Submitted by: **Your name here**
+Submitted by: Mubarak Odufade
 
-About this web app: **App description here**
+About this web app: A virtual community space with an interactive interface that allows users to explore events by location.
 
-Time spent: **X** hours
+Time spent: 6 hours
 
 ## Required Features
 
